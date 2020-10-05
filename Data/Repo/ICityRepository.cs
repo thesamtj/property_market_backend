@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace property_market_backend.Data.Repo
 {
-    interface ICityRepository
+    public interface ICityRepository
     {
         Task<IEnumerable<City>> GetCitiesAsync();
         void AddCity(City city);
