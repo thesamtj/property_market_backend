@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using property_market_backend.Interfaces;
 using property_market_backend.Models;
 using System;
 using System.Collections.Generic;
@@ -29,11 +30,6 @@ namespace property_market_backend.Data.Repo
         public async Task<IEnumerable<City>> GetCitiesAsync()
         {
             return await dc.Cities.ToListAsync();
-        }
-
-        public async Task<bool> SaveAsync()
-        {
-            return await dc.SaveChangesAsync() > 0;
         }
     }
 }
