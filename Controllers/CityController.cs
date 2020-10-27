@@ -26,7 +26,15 @@ namespace property_market_backend.Controllers
         public async Task<IActionResult> GetCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
-            return Ok(cities);
+
+            var citiesDto = from c in cities
+                            select new CityDto()
+                            {
+                                Id = c.Id,
+                                Name = c.Name
+                            };
+
+            return Ok(citiesDto);
         }
 
         // Post api/city/post --Post the data in JSON Format
