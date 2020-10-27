@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace property_market_backend.Models
+namespace property_market_backend.Dtos
 {
-    public class City
+    public class CityDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime LastUpdateOn { get; set; }
-        public int LastUpdateBy { get; set; }
     }
 }
