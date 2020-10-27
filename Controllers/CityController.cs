@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using property_market_backend.Dtos;
 using property_market_backend.Interfaces;
 using property_market_backend.Models;
 
@@ -30,8 +31,15 @@ namespace property_market_backend.Controllers
 
         // Post api/city/post --Post the data in JSON Format
         [HttpPost("post")]
-        public async Task<IActionResult> AddCity(City city)
+        public async Task<IActionResult> AddCity(CityDto cityDto)
         {
+            var city = new City
+            {
+                Name = cityDto.Name,
+                LastUpdateBy = 1,
+                LastUpdateOn = DateTime.Now
+            };
+
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
