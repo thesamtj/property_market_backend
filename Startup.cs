@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using property_market_backend.Data;
+using property_market_backend.Helpers;
 using property_market_backend.Interfaces;
 
 namespace property_market_backend
@@ -31,6 +32,7 @@ namespace property_market_backend
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddControllers();
             services.AddCors();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
