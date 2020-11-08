@@ -29,12 +29,14 @@ namespace property_market_backend.Controllers
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
 
-            var citiesDto = from c in cities
-                            select new CityDto()
-                            {
-                                Id = c.Id,
-                                Name = c.Name
-                            };
+            var citiesDto = mapper.Map<IEnumerable<CityDto>>(cities);
+
+            // var citiesDto = from c in cities
+            //                select new CityDto()
+            //               {
+            //                   Id = c.Id,
+            //                 Name = c.Name
+            //               };
 
             return Ok(citiesDto);
         }
@@ -43,12 +45,16 @@ namespace property_market_backend.Controllers
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(CityDto cityDto)
         {
-            var city = new City
-            {
-                Name = cityDto.Name,
-                LastUpdateBy = 1,
-                LastUpdateOn = DateTime.Now
-            };
+            var city = mapper.Map<City>(cityDto);
+            city.LastUpdateBy = 1;
+            city.LastUpdateOn = DateTime.Now;
+
+            // var city = new City
+            // {
+            //    Name = cityDto.Name,
+            //    LastUpdateBy = 1,
+            //    LastUpdateOn = DateTime.Now
+            // };
 
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
