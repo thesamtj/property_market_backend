@@ -1,4 +1,5 @@
-﻿using property_market_backend.Dtos;
+﻿using AutoMapper;
+using property_market_backend.Dtos;
 using property_market_backend.Models;
 using System;
 using System.Collections.Generic;
