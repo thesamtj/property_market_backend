@@ -47,8 +47,8 @@ namespace property_market_backend.Controllers
         public async Task<IActionResult> AddCity(CityDto cityDto)
         {
             var city = mapper.Map<City>(cityDto);
-            city.LastUpdateBy = 1;
-            city.LastUpdateOn = DateTime.Now;
+            city.LastUpdatedBy = 1;
+            city.LastUpdatedOn = DateTime.Now;
 
             // var city = new City
             // {
@@ -60,6 +60,18 @@ namespace property_market_backend.Controllers
             uow.CityRepository.AddCity(city);
             await uow.SaveAsync();
             return StatusCode(201);
+        }
+
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCity(int id, CityDto cityDto)
+        {
+            var cityFromDb = await uow.CityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(200);
         }
 
 
