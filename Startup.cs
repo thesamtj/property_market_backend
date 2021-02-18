@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using property_market_backend.Data;
+using property_market_backend.Extensions;
 using property_market_backend.Helpers;
 using property_market_backend.Interfaces;
 
@@ -43,28 +44,7 @@ namespace property_market_backend
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler(
-                    options => {
-                        options.Run(
-                            async context =>
-                            {
-                                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                var ex = context.Features.Get<IExceptionHandlerFeature>();
-                                if (ex != null)
-                                {
-                                    await context.Response.WriteAsync(ex.Error.Message);
-                                }
-                            }
-                        );
-                    }
-                );
-            }
+            app.ConfigureExceptionHandler(env);
 
             app.UseRouting();
 
