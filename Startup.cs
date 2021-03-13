@@ -18,6 +18,7 @@ using property_market_backend.Data;
 using property_market_backend.Extensions;
 using property_market_backend.Helpers;
 using property_market_backend.Interfaces;
+using property_market_backend.Middlewares;
 
 namespace property_market_backend
 {
@@ -44,7 +45,9 @@ namespace property_market_backend
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.ConfigureExceptionHandler(env);
+            //app.ConfigureExceptionHandler(env);
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
 
