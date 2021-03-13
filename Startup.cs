@@ -47,6 +47,8 @@ namespace property_market_backend
         {
             app.ConfigureExceptionHandler(env);
 
+            // app.ConfigureBuiltinExceptionHandler(env);
+
             app.UseRouting();
 
             app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
