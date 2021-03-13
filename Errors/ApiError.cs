@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace property_market_backend.Errors
@@ -18,6 +19,10 @@ namespace property_market_backend.Errors
             ErrorDetails = errorDetails;
         }
 
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);
+        }
 
     }
 }
