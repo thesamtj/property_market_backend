@@ -33,12 +33,25 @@ namespace property_market_backend.Middlewares
             {
                 ApiError response;
                 HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+                string message;
+                var exceptionType = ex.GetType();
+
+                if (exceptionType == typeof(UnauthorizedAccessException))
+                {
+                    statusCode = HttpStatusCode.Forbidden;
+                    message = "You are not authorized";
+                } else
+                {
+                    statusCode = HttpStatusCode.InternalServerError;
+                    message = "Some unknown error occurred";
+                }
+
                 if (env.IsDevelopment())
                 {
                     response = new ApiError((int)statusCode, ex.Message, ex.StackTrace);
                 } else
                 {
-                    response = new ApiError((int)statusCode, ex.Message);
+                    response = new ApiError((int)statusCode, message);
                 }
 
                 logger.LogError(ex, ex.Message);
