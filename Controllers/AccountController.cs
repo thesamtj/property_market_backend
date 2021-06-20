@@ -1,11 +1,31 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using property_market_backend.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace property_market_backend.Controllers
 {
-    public class AccountController
+    public class AccountController : BaseController
     {
+        private readonly IUnitOfWork uow;
+
+        public AccountController(IUnitOfWork uow)
+        {
+            this.uow = uow;
+        }
+
+        public async Task<IActionResult> Login(LoginReqDto loginReq)
+        {
+            var user = await uow.UserRepository.Authenticate(loginReq.UserName, loginReq.Password);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(user);
+        }
     }
 }
