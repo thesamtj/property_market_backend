@@ -32,7 +32,7 @@ namespace property_market_backend.Controllers
             loginRes.UserName = user.Username;
             loginRes.Token = "Token to be generated";
 
-            return Ok(user);
+            return Ok(loginRes);
         }
     }
 }
