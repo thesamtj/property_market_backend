@@ -10,8 +10,8 @@ namespace property_market_backend.Models
     {
         public int Id { get; set; }
         [Required]
-        public int Username { get; set; }
+        public string Username { get; set; }
         [Required]
-        public int Password { get; set; }
+        public string Password { get; set; }
     }
 }
