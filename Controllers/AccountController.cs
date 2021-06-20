@@ -17,6 +17,7 @@ namespace property_market_backend.Controllers
             this.uow = uow;
         }
 
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginReqDto loginReq)
         {
             var user = await uow.UserRepository.Authenticate(loginReq.UserName, loginReq.Password);
