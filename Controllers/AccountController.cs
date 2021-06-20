@@ -17,6 +17,7 @@ namespace property_market_backend.Controllers
             this.uow = uow;
         }
 
+        //api/account/login
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginReqDto loginReq)
         {
