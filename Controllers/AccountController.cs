@@ -28,6 +28,10 @@ namespace property_market_backend.Controllers
                 return Unauthorized();
             }
 
+            var loginRes = new LoginResDto();
+            loginRes.UserName = user.Username;
+            loginRes.Token = "Token to be generated";
+
             return Ok(user);
         }
     }
