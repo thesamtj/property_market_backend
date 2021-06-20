@@ -11,9 +11,7 @@ using property_market_backend.Models;
 
 namespace property_market_backend.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CityController : ControllerBase
+    public class CityController : BaseController
     {
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
