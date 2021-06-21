@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using property_market_backend.Dtos;
 using property_market_backend.Interfaces;
@@ -16,10 +17,12 @@ namespace property_market_backend.Controllers
     public class AccountController : BaseController
     {
         private readonly IUnitOfWork uow;
+        private readonly IConfiguration configuration;
 
-        public AccountController(IUnitOfWork uow)
+        public AccountController(IUnitOfWork uow, IConfiguration configuration)
         {
             this.uow = uow;
+            this.configuration = configuration;
         }
 
         //api/account/login
@@ -42,9 +45,9 @@ namespace property_market_backend.Controllers
 
         private string CreateJWT(User user)
         {
-            //var secretKey = configuration.GetSection("AppSettings:Key").Value;
+            var secretKey = configuration.GetSection("AppSettings:Key").Value;
             var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes("hmmm...this is a top secret"));
+                .GetBytes(secretKey));
 
             var claims = new Claim[] {
                 new Claim(ClaimTypes.Name,user.Username),
