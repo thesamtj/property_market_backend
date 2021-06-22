@@ -26,7 +26,7 @@ namespace property_market_backend.Controllers
 
         // GET api/city
         [HttpGet]
-        // [AllowAnonymous]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
             var cities = await uow.CityRepository.GetCitiesAsync();
