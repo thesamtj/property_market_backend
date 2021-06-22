@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>property_market_backend</RootNamespace>
+    <UserSecretsId>2c4ac5c2-1a2b-456c-8904-830d0ba0b65e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
