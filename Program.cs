@@ -18,6 +18,10 @@ namespace property_market_backend
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureHostConfiguration(configHost => 
+                {
+                    configHost.AddEnvironmentVariables(prefix: "PropertyMKT_");
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
