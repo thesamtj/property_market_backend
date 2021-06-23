@@ -43,6 +43,31 @@ namespace property_market_backend.Controllers
             return Ok(loginRes);
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(LoginReqDto loginReq)
+        {
+            //ApiError apiError = new ApiError();
+
+            //if (loginReq.UserName.IsEmpty() || loginReq.Password.IsEmpty())
+            //{
+            //    apiError.ErrorCode = BadRequest().StatusCode;
+            //    apiError.ErrorMessage = "User name or password can not be blank";
+            //    return BadRequest(apiError);
+            //}
+
+            if (await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
+            {
+                //apiError.ErrorCode = BadRequest().StatusCode;
+                //apiError.ErrorMessage = "User already exists, please try different user name";
+                return BadRequest("User already exists, please try different user name");
+            }
+
+            uow.UserRepository.Register(loginReq.UserName, loginReq.Password);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+
+
         private string CreateJWT(User user)
         {
             var secretKey = configuration.GetSection("AppSettings:Key").Value;
