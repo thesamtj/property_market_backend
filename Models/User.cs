@@ -12,6 +12,6 @@ namespace property_market_backend.Models
         [Required]
         public string Username { get; set; }
         [Required]
-        public string Password { get; set; }
+        public byte[] Password { get; set; }
     }
 }
