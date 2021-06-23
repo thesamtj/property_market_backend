@@ -19,7 +19,7 @@ namespace property_market_backend.Data.Repo
 
         public async Task<User> Authenticate(string userName, string password)
         {
-            return await dc.Users.FirstOrDefaultAsync(x => x.Username == userName && x.Password == password);
+            return await dc.Users.FirstOrDefaultAsync(x => x.Username == userName /*&& x.Password == password*/);
         }
     }
 }
