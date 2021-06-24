@@ -19,9 +19,33 @@ namespace property_market_backend.Data.Repo
             this.dc = dc;
         }
 
-        public async Task<User> Authenticate(string userName, string password)
+        public async Task<User> Authenticate(string userName, string passwordText)
         {
-            return await dc.Users.FirstOrDefaultAsync(x => x.Username == userName /*&& x.Password == password*/);
+            var user = await dc.Users.FirstOrDefaultAsync(x => x.Username == userName);
+
+            if (user == null || user.PasswordKey == null)
+                return null;
+
+            if (!MatchPasswordHash(passwordText, user.Password, user.PasswordKey))
+                return null;
+
+            return user;
+        }
+
+        private bool MatchPasswordHash(string passwordText, byte[] password, byte[] passwordKey)
+        {
+            using (var hmac = new HMACSHA512(passwordKey))
+            {
+                var passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(passwordText));
+
+                for (int i = 0; i < passwordHash.Length; i++)
+                {
+                    if (passwordHash[i] != password[i])
+                        return false;
+                }
+
+                return true;
+            }
         }
 
         public void Register(string userName, string password)
