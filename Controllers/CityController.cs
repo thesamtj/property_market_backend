@@ -24,7 +24,7 @@ namespace property_market_backend.Controllers
             this.mapper = mapper;
         }
 
-        // GET api/city
+        // GET api/city/cities
         [HttpGet("cities")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCities()
