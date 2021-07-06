@@ -25,7 +25,7 @@ namespace property_market_backend.Controllers
         }
 
         // GET api/city
-        [HttpGet]
+        [HttpGet("cities")]
         [AllowAnonymous]
         public async Task<IActionResult> GetCities()
         {
