@@ -70,6 +70,7 @@ namespace property_market_backend
 
             app.UseHsts();
 
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
