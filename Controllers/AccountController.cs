@@ -33,7 +33,7 @@ namespace property_market_backend.Controllers
 
             if (user == null)
             {
-                return Unauthorized();
+                return Unauthorized("Invalid user name or password");
             }
 
             var loginRes = new LoginResDto();
