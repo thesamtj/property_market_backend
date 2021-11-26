@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using property_market_backend.Dtos;
+using property_market_backend.Errors;
 using property_market_backend.Interfaces;
 using property_market_backend.Models;
 using System;
@@ -31,9 +32,14 @@ namespace property_market_backend.Controllers
         {
             var user = await uow.UserRepository.Authenticate(loginReq.UserName, loginReq.Password);
 
+            ApiError apiError = new ApiError();
+
             if (user == null)
             {
-                return Unauthorized("Invalid user name or password");
+                apiError.ErrorCode = Unauthorized().StatusCode;
+                apiError.ErrorMessage = "Invalid user name or password";
+                apiError.ErrorDetails = "This error appear when provided user id or password does not exists";
+                return Unauthorized(apiError);
             }
 
             var loginRes = new LoginResDto();
@@ -46,14 +52,14 @@ namespace property_market_backend.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(LoginReqDto loginReq)
         {
-            //ApiError apiError = new ApiError();
+            ApiError apiError = new ApiError();
 
-            //if (loginReq.UserName.IsEmpty() || loginReq.Password.IsEmpty())
-            //{
-            //    apiError.ErrorCode = BadRequest().StatusCode;
-            //    apiError.ErrorMessage = "User name or password can not be blank";
-            //    return BadRequest(apiError);
-            //}
+            if (String.IsNullOrEmpty(loginReq.UserName) || String.IsNullOrEmpty(loginReq.Password))
+            {
+                apiError.ErrorCode = BadRequest().StatusCode;
+                apiError.ErrorMessage = "User name or password can not be blank";
+                return BadRequest(apiError);
+            }
 
             if (await uow.UserRepository.UserAlreadyExists(loginReq.UserName))
             {
