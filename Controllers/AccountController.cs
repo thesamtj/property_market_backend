@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using property_market_backend.Dtos;
 using property_market_backend.Errors;
+using property_market_backend.Extensions;
 using property_market_backend.Interfaces;
 using property_market_backend.Models;
 using System;
@@ -54,7 +55,7 @@ namespace property_market_backend.Controllers
         {
             ApiError apiError = new ApiError();
 
-            if (String.IsNullOrEmpty(loginReq.UserName) || String.IsNullOrEmpty(loginReq.Password))
+            if (loginReq.UserName.IsEmpty() || loginReq.Password.IsEmpty())
             {
                 apiError.ErrorCode = BadRequest().StatusCode;
                 apiError.ErrorMessage = "User name or password can not be blank";
@@ -70,7 +71,7 @@ namespace property_market_backend.Controllers
 
             uow.UserRepository.Register(loginReq.UserName, loginReq.Password);
             await uow.SaveAsync();
-            return StatusCode(201);
+            return StatusCode(201); 
         }
 
 
